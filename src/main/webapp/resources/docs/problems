@@ -1,0 +1,83 @@
+1。tomcat默认欢迎页是/index.html和/index.jsp,
+如果由这两个页面中的一个,请求就直接返回该页面，而不会经过spring的dispacher.
+如果要使url"/"经过spring,得保证根目录下没有index.html或index.jsp
+
+或者在web.xml中配置
+<welcome-file-list>
+		<welcome-file></welcome-file>
+</welcome-file-list>
+这样web服务器就知道，根路径不要web服务器来处理，而是由程序自身来处理。这时，index.html也就不起作用了。
+
+
+2.jackson版本问题，pom中加入
+<dependency>
+			<groupId>org.codehaus.jackson</groupId>
+			<artifactId>jackson-mapper-asl</artifactId>
+			<version>1.9.13</version>
+</dependency>
+json解析的时候会出错，需要改成
+<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-databind</artifactId>
+			<version>2.5.4</version>
+</dependency>
+
+3.在junit自动注入webapplicationcontext,需要添加注解@WebAppConfiguration
+
+4.当使用注解@RestController时,返回json对象就不需要加@ResponseBody,反对的是基本对象,会自动转为json对象,返回的是ModelAndView时，不会转成json;@RestController相当于
+@Controller+@ResponseBody.当只用@Controllers而不实用@ResponseBody，且返回的是对象时，如果List<String>,该对象会自动转为json类型的model,但是整个请求返回的是ModelAndView,此时View就是空，就会报404错误
+
+5.spring jackson会自动将对象转换为json,前提是对象中有getXX()方法,产生的json格式是{“xx”，value};如果没有提供get方法，但是在属性上有@JsonProperty注解，也会转成Json。
+这对于某些不像提供公有get方法的属性很有帮助。比如HealthRecord里的itemMap;
+
+6.要调用hibernate 4的sessionFactory.getCurrentSession()方法，必须保证在事务中调用，即调用者需要有@Transactional标签，否则会报错;另外@Tansactionl是用来表明需要事务管理，@TransactinConfiguration是用来对事务进行配置
+
+7.Juit测试时 
+ @Autowired
+ private RetrievalService retrievalService; 会报错。应该autowire接口而不是具体类。如果接口有不同的实现，可以再具体事项上写@Component("name")然后用@Autowired和@Qualifier("name");
+ 上例应该改为
+ @Autowired
+ private IRetrievalService retrievalService; 
+ 这是因为Spring是根据interface来创建和使用代理对象的
+ 
+ 8.用junit测试Service类时，因为service本身带有@Transactional注解，所以测试类不用加该注解，但是测试类不应该影响数据库的结果，所以最好在测试类上加
+ @TransactionConfiguration(defaultRollback = true)
+@Transactional
+以便回滚
+
+9.hibernatedao 的find("string")不区分大小写
+
+10.当把此配置注释掉时<!-- tx:annotation-driven transaction-manager="transactionManager" /-->,
+Junit可以正常运行，事务不受影响；Tomcat则无法正常运行,报错“ Could not obtain transaction-synchronized Session for current thread”
+即事务没有开启。。。猜测可能原因是junit使用的@RunWith(SpringJUnit4ClassRunner.class)或@WebAppConfiguration注解，自动默认开启了事务
+
+11.当把以下代码注释掉时
+<！--bean id="transactionManager"
+		class="org.springframework.orm.hibernate4.HibernateTransactionManager">
+		<property name="sessionFactory" ref="sessionFactory" />
+</bean-->
+junit 不能正藏运行，说明junit的事务管理器是这里配置的。如果将id="transactionManager"改成其他任何id,如id="tm",junit还能运行，说明是通过类型来获取事务管理器的
+
+12.当使用了
+<tx:advice id="txAdvice" transaction-manager="transactionManager">
+		<tx:attributes>
+			<tx:method name="get*" propagation="REQUIRED" read-only="true" />
+		</tx:attributes>
+	</tx:advice>
+
+	<aop:config>
+		<aop:pointcut id="allServiceMethods"
+			expression="execution(* ac.iscas.hrs.service.impl.*.*(..))" />
+		<aop:advisor advice-ref="txAdvice" pointcut-ref="allServiceMethods" />
+	</aop:config>
+时，下面语句可以注释掉
+<!-- tx:annotation-driven transaction-manager="transactionManager" /-->
+同时service上的@Transactional标签也可以去掉
+
+13.一开始pom中没有 加jstl的依赖，jsp文件中也没有加<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>。虽然乜有报错，但是<c:forEach>没有起作用.
+此问题跟spring没关系，而是要添加对jstl标签的支持。具体参见http://stackoverflow.com/questions/6094329/tomcat-7-and-jstl
+
+14.mysql 中文乱码问题，需啊
+1、修改数据库的字符集为UTF-8,这个可以通过mysql的客户端软件里右键要修改的数据库的属性更改。
+2、修改Client默认字符集为UTF8。windows下在mysql安装目录（我的计算机操作系统是Windows 7 64，默认的安装路径在：C:\Program Files (x86)\MySQL\MySQL Server 5.0）下找到my.ini,将里面的default-character-set=latin1 改为default-character-set=UTF8，然后重起mysql服务即可将数据库默认字符集改为utf8。
+3、jdbc.url=jdbc:mysql://localhost:3306/hrs?createDatabaseIfNotExist=true&amp;useUnicode=true&amp;characterEncoding=UTF-8

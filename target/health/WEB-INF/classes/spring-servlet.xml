@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans xmlns="http://www.springframework.org/schema/mvc"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:beans="http://www.springframework.org/schema/beans"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.1.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.1.xsd">
+	 
+	<context:component-scan base-package="iscas.otcaix.di" />
+	<mvc:annotation-driven />
+	
+	<mvc:resources mapping="/js/**" location="/resources/js/" />
+	<mvc:resources mapping="/fonts/**" location="/resources/fonts/"/>
+	<mvc:resources mapping="/img/**" location="/resources/img/"/>
+	<mvc:resources mapping="/css/**" location="/resources/css/" />
+	<resources mapping="/resources/**" location="/resources_raw/" />
+	
+	<beans:bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<beans:property name="prefix" value="/WEB-INF/pages/" />
+		<beans:property name="suffix" value=".jsp" />
+	</beans:bean>
+	
+	<view-controller path="main" view-name="main"/>
+	<view-controller path="404" view-name="404"/>
+	<view-controller path="search_health" view-name="search_health"/>
+	<view-controller path="demo_patient_deep_learning" view-name="demo_patient_deep_learning"/>
+	<view-controller path="demo_patient_metric_learning" view-name="demo_patient_metric_learning"/>
+	<view-controller path="train_data_selection" view-name="train_data_selection"/>
+	<view-controller path="train_model_selection" view-name="train_model_selection"/>
+	<view-controller path="train_feedback" view-name="train_feedback"/>
+	
+	<!-- 配置Hibernate -->
+	<!-- 配置数据源 -->
+	<context:property-placeholder location="classpath:health-system.properties" />
+	
+	<beans:bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource" destroy-method="close">
+		<beans:property name="driverClassName" value="${jdbc.driverClassName}" />
+		<beans:property name="url" value="${jdbc.url}" />
+		<beans:property name="username" value="${jdbc.username}" />
+		<beans:property name="password" value="${jdbc.password}" />
+	</beans:bean>
+	
+	<beans:bean id="dataSource_hospitaldata" class="org.apache.commons.dbcp2.BasicDataSource" destroy-method="close">
+		<beans:property name="driverClassName" value="${jdbc.driverClassName}" />
+		<beans:property name="url" value="${hospital_db_url}" />
+		<beans:property name="username" value="${jdbc.username}" />
+		<beans:property name="password" value="${jdbc.password}" />
+	</beans:bean>
+	
+	<!-- 配置Hibernate Session Factory -->
+	<beans:bean id="sessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+		<beans:property name="dataSource" ref="dataSource" />
+		<beans:property name="packagesToScan" value="iscas.otcaix.di.entity" />
+		<beans:property name="hibernateProperties">
+			<beans:props>
+				<beans:prop key="hibernate.hbm2ddl.auto">${hibernate.hbm2ddl.auto}</beans:prop>
+				<beans:prop key="hibernate.show_sql">${hibernate.show_sql}</beans:prop>
+				<beans:prop key="hibernate.dialect">${hibernate.dialect}</beans:prop>
+				<!--prop key ="hibernate.query.factory_class" >org.hibernate.hql.internal.classic.ClassicQueryTranslatorFactory</prop-->
+			</beans:props>
+		</beans:property>
+	</beans:bean>
+	
+
+	<!-- 开启事务，并配置 transaction manager -->
+	<!-- tx:annotation-driven transaction-manager="transactionManager" /-->
+	 <beans:bean id="transactionManager"
+		class="org.springframework.orm.hibernate4.HibernateTransactionManager">
+		<beans:property name="sessionFactory" ref="sessionFactory" />
+	</beans:bean>
+	
+	<!-- 配置事务特性（配置事务的传播特性 ） -->
+	<tx:advice id="txAdvice" transaction-manager="transactionManager">
+		<tx:attributes>
+			<tx:method name="get*" propagation="REQUIRED" read-only="true" />
+			<tx:method name="retrievalBy*" propagation="REQUIRED" read-only="true" />
+		</tx:attributes>
+	</tx:advice>
+
+
+ 	<!-- 配置事务拦截器拦截哪些类的哪些方法,一般设置成拦截Service -->
+	<aop:config>
+		<aop:pointcut id="allServiceMethods" expression="execution(* iscas.otcaix.di.service.impl.*.*(..))" />
+		<aop:advisor advice-ref="txAdvice" pointcut-ref="allServiceMethods" />
+	</aop:config>
+</beans:beans>

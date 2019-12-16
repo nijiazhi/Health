@@ -1,0 +1,17 @@
+@charset "utf-8";
+*{margin:0;padding:0;font-family:"微软雅黑";}
+a{color:#000; text-decoration:none;}
+
+
+.project-screening{background:url(../../img/slider/s_select_bg_03.png) repeat-x;width:520px;margin:50px auto 0 auto;position:relative;height:5px;}
+.screening-select{background:url(../../img/slider/s_select_bg_06.png) no-repeat;width:8px;height:9px;position:absolute;top:-2px;cursor:pointer}
+.select-1{left:-1px;}
+.select-2{left:25%;}
+.select-3{left:50%;}
+.select-4{left:75%;}
+.select-5{left:100%;}
+.project-screening-yellow{background:url(../../img/slider/s_select_bg_04.png) no-repeat;height:9px;overflow:hidden;width:0;border-radius:10px;}
+.screening-select a{position:absolute;left:-23px;top:-27px;white-space:nowrap;margin:0;padding:0;line-height:none;width:56px; text-align:center;line-height:16px;font-size:12px;}
+.screening-select a:hover{color:#ff8b24;}
+.project-screening .select-1-yellow{background:url(../../img/slider/s_select_bg_17.png) no-repeat;width:20px;height:20px; position:absolute;left:-7px;bottom:-8px;z-index:3}
+.project-screening .current a{background:url(../../img/slider/s_select_bg_09.png) top center no-repeat;color:#fff;height:21px;}

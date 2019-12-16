@@ -1,0 +1,505 @@
+* {
+    font-family: "Helvetica Neue", Arial, "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+}
+
+html, body {
+    margin: 0;
+    height: 100%;
+    background: #f2f2f2;
+    font-size: 14px;
+    padding-top: 30px;
+}
+
+a, * a {
+    color: #56bdfc;
+}
+
+a:hover, * a:hover {
+    text-decoration: none;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-weight: 400;
+}
+
+.avatar {
+    border-radius: 100em;
+}
+
+/*--------------------
+NAVBAR
+--------------------*/
+.navbar {
+    margin-bottom: 0;
+    padding: 0 10px;
+    background: #38495d /*#fff*/;
+}
+
+.navbar .navbar-brand {
+    padding-left: 60px;
+    padding-right: 10px;
+    color: #fff;
+}
+
+.navbar .notice .badge {
+    background: #ea0000;
+}
+
+.navbar-bottom {
+    position: fixed;
+    z-index: 8;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    line-height: 50px;
+    padding-left: 210px;
+    background: #f5f5f5;
+    border-radius: 0;
+    font-size: 0;
+}
+
+.navbar-bottom a.btn {
+    margin-right: 8px;
+    font-size: 18px;
+}
+
+/*--------------------
+SIDEBAR
+--------------------*/
+.sidebar-clps {
+    z-index: 9;
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 20px;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    background: #e7e7e7 /*#272e35*/;
+    border-right: 1px solid #e7e7e7;
+}
+
+.sidebar-clps a {
+    display: block;
+    position: relative;
+    width: 20px;
+    height: 100%;
+    color: #999;
+    cursor: pointer;
+}
+
+.sidebar-clps a i {
+    position: absolute;
+    left: 4px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.sidebar {
+    z-index: 10;
+    position: fixed;
+    left: 0;
+    top: 0px;
+    width: 20%;
+    max-width: 220px;
+    height: 100%;
+    margin: 0;
+    padding: 60px 0 0;
+    border-width: 0;
+    border-radius: 0;
+    background: #e7e7e7 /*#272e35*/;
+    border-right: 1px solid #e7e7e7;
+}
+
+ul.sidebar-nav {
+    color: #fff;
+}
+
+ul.sidebar-nav li {
+    border-bottom: 0;
+}
+
+ul.sidebar-nav i {
+    width: 20px;
+    margin-right: 5px;
+    text-align: center;
+    color: #56bdfc;
+}
+
+ul.sidebar-nav li a {
+    padding-top: 8px;
+    padding-bottom: 8px;
+    color: #666 /*#ddd*/;
+    font-size: 14px;
+}
+
+ul.sidebar-nav li a:focus {
+    background: #eee /*#272e35*/;
+}
+
+ul.sidebar-nav li a:hover {
+    background: #ddd /*#1c272f*/;
+    color: #666 /*#fff*/;
+}
+
+ul.sidebar-nav li > a.active,
+ul.sidebar-nav li.active > a,
+ul.sidebar-nav .nav-second-level {
+    background-color: #fff /*#191e22*/;
+    color: #56bdfc;
+}
+
+ul.sidebar-nav .nav-second-level li a,
+ul.sidebar-nav .nav-second-level li a.active {
+    padding: 6px 0 6px 40px;
+    background-color: transparent;
+}
+
+ul.sidebar-nav .nav-second-level li.indent a {
+    padding: 4px 0 4px 66px;
+}
+
+ul.sidebar-nav .nav-second-level {
+    padding-bottom: 5px;
+}
+
+ul.sidebar-nav .arrow {
+    float: right;
+    margin-top: 3px;
+}
+
+ul.sidebar-nav .fa.arrow:before {
+    content: "\f104";
+}
+
+ul.sidebar-nav .active > a > .fa.arrow:before {
+    content: "\f107";
+}
+
+ul.sidebar-nav li#collapse a,
+ul.sidebar-nav li#collapse i {
+    color: #999;
+}
+
+/*--------------------
+MAIN WRAPPER
+--------------------*/
+.wrapper {
+    margin-left: 200px;
+    padding: 50px 20px 60px;
+}
+
+.page-main {
+    padding: 10px 0px 0;
+    min-width: 1000px;
+}
+
+h3.page-title {
+    margin: 0;
+}
+
+h3.page-title .small {
+    font-size: 12px;
+}
+
+/*---------- space ----------*/
+.space-xs {
+    height: 8px;
+}
+
+.space-sm {
+    height: 15px;
+}
+
+.space-md {
+    height: 30px;
+}
+
+.space-lg {
+    height: 45px;
+}
+
+/*---------- text & background ----------*/
+.text-primary {
+    color: #56bdfc;
+}
+
+.bg-grey {
+    background-color: #fafafa;
+}
+
+/*---------- button & dropdown ----------*/
+.btn-default .fa {
+    color: #56bdfc;
+}
+
+.btn-primary {
+    background: #56bdfc;
+    border-color: #56bdfc;
+}
+
+.btn-primary:hover {
+    background: #29d;
+    border-color: #29d;
+}
+
+.btn-xm {
+    padding: 0px 6px;
+}
+
+.btn-sm, .nav-pills .btn-sm {
+    padding: 4px 6px;
+}
+
+.nav-pills .btn-sm.btn-primary {
+    background: #56bdfc;
+    border-color: #56bdfc;
+}
+
+ul.pull-right .dropdown-menu {
+    left: auto;
+    right: 0;
+}
+
+/*---------- panel ----------*/
+.panel-primary {
+    border-color: #56bdfc;
+}
+
+.panel-primary .panel-heading {
+    background: #56bdfc;
+    border-color: #56bdfc;
+}
+
+.panel-heading {
+    padding: 6px 10px;
+    border-radius: 0;
+}
+
+.panel-heading .panel-title {
+    font-size: 13px;
+}
+
+/*--------table-compact-------*/
+.table-compact {
+    max-width: none;
+}
+
+.table > thead > tr > th, .table > tbody > tr > th, .table > tfoot > tr > th,
+.table > thead > tr > td, .table > tbody > tr > td, .table > tfoot > tr > td {
+    padding: 4px 8px;
+    font-size: 12px;
+}
+
+.table > thead > tr > th {
+    background: #e7e7e7;
+    font-weight: 800;
+}
+
+.table-compact > thead > tr > th,
+.table-compact > tbody > tr > td {
+
+    width: 1px;
+    white-space: nowrap;
+    word-break: keep-all;
+    text-align: center;
+}
+
+.cellhighlight {
+    background-color: #f2f2f2;
+}
+
+.table tbody tr:hover {
+    background-color: #f2f2f2
+}
+
+.table .table-newrow {
+    display: none;
+}
+
+.table th.table-newcol {
+    background: #7fceff;
+}
+
+.table td.table-newcol {
+    background: #eee;
+}
+
+.table .form-control {
+    display: inline-block;
+    width: 70px;
+    height: 24px;
+    padding: 4px;
+    font-size: 12px;
+}
+
+.table .form-control.input-xs {
+    width: 50px;
+}
+
+.table-long-wrapper {
+    width: 100%;
+    overflow-x: scroll;
+}
+
+/*---------- form ----------*/
+.form-group {
+    margin-bottom: 10px;
+}
+
+.form-group-sm .form-control {
+    height: 24px;
+    padding: 2px 6px;
+    border-radius: 0;
+}
+
+.form-group-sm .form-control-static {
+    padding-top: 2px;
+    padding-left: 0;
+}
+
+.form-group-sm .form-control-static .btn-sm {
+    margin-top: -2px;
+}
+
+.form-group-sm .input-group .input-group-addon {
+    padding: 2px 6px;
+    border-radius: 0;
+    font-size: 12px;
+}
+
+.form-group-sm .btn-sm {
+    height: 24px;
+    padding: 2px 4px;
+}
+
+.form .modal-dialog {
+    width: 600px;
+}
+
+.form .modal-dialog.modal-sm {
+    width: 300px;
+}
+
+.form .modal-dialog.modal-lg {
+    width: 900px;
+}
+
+/*---------- pagination ----------*/
+.pagination {
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+.pagination .paginate_button a {
+    padding: 4px 8px;
+    color: #56bdfc;
+}
+
+.pagination .paginate_button.active a {
+    background-color: #56bdfc;
+    border-color: #56bdfc;
+    color: #fff;
+}
+
+/*---------- tab & tab-content ----------*/
+.nav-tabs {
+    padding-top: 8px;
+    padding-left: 8px;
+    background: -webkit-gradient(linear, center top, center bottom, from(#7fceff), to(#56bdfc));
+    border: 0;
+}
+
+.nav-tabs li a {
+    margin-right: 4px;
+    padding: 4px 12px;
+    background: #eee;
+    border-bottom: 0;
+    font-size: 12px;
+}
+
+.tab-content > .panel-default {
+    border-top: 0;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+}
+
+.tab-content .panel-default .panel-heading,
+.sec-content .panel-default .panel-heading {
+    background: #d9edf7;
+    border-bottom: 0;
+}
+
+.tab-content .panel-default .panel-heading h5,
+.sec-content .panel-default .panel-heading h5 {
+    margin: 2px 0;
+}
+
+.tab-info-fixed {
+    padding: 15px 15px 0;
+    border-color: #ddd;
+    border-width: 0 1px 0 1px;
+    border-style: solid;
+    background: #fff;
+}
+
+.tab-info-fixed .row {
+    padding-bottom: 15px;
+    border-bottom: 1px solid #ddd;
+}
+
+/*---------- progbar ----------*/
+.progbar ul {
+    display: block;
+    width: 960px;
+    padding: 0;
+    font-size: 0;
+    list-style: none;
+}
+
+ul.progbar-item {
+    border-radius: 4px;
+    background: url(../img/progbar-bg.png) no-repeat left top;
+}
+
+ul.progbar-item li {
+    display: inline-block;
+    width: 120px;
+    height: 50px;
+    font-size: 13px;
+}
+
+ul.progbar-item li a {
+    display: block;
+    width: 90px;
+    height: 30px;
+    line-height: 30px;
+    margin: 10px 12px 10px 18px;
+    text-align: center;
+    border-radius: 4px;
+}
+
+ul.progbar-item li.active a {
+    background: #56bdfc;
+    color: #fff;
+}
+
+ul.progbar-time li {
+    display: inline-block;
+    width: 120px;
+    font-size: 12px;
+    text-align: center;
+    color: #999;
+}
+
+label, .placeholder {
+    font-size: 14px;
+    font-weight: 300;
+}
+
+.input-text, .btn, .input-text.size-M, .btn.size-M {
+    font-size: 14px;
+    height: 31px;
+    line-height: 1.42857;
+    padding: 4px;
+}
